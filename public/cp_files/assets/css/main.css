@@ -1,0 +1,73 @@
+
+@font-face {
+    font-family: 'DINNextLTArabic-Regular';
+    src: url('../fonts/DINNextLTArabic-Regular.ttf');
+}
+
+
+body,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'DINNextLTArabic-Regular';
+}
+
+
+table{
+    border: 1px solid #e0dfdf;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.table th{
+    font-weight: bold;
+    background: #009ef71c;
+    color: #5b5b5b;
+}
+
+.table th,
+.table td{
+    padding:  13px !important;
+}
+
+div.dataTables_wrapper div.dataTables_paginate .pagination .previous,
+div.dataTables_wrapper div.dataTables_paginate .pagination .next{
+    display: none;
+}
+
+
+.btns-datatables-export a{
+    padding: 0 10px 4px !important;
+    font-size: 13px;
+    margin: 0 2px;
+    border-radius: 3px;
+}
+
+
+
+.text-primary {
+    color: #C00000 !important;
+}
+
+.btn.btn-primary{
+    border-color: #C00000;
+    background-color: #C00000 !important;
+}
+
+
+.aside-menu .menu .menu-item .menu-link.active,
+.btn-check:checked + .btn.btn-primary,
+.btn-check:active + .btn.btn-primary,
+.btn.btn-primary:focus:not(.btn-active),
+.btn.btn-primary:hover:not(.btn-active),
+.btn.btn-primary:active:not(.btn-active),
+.btn.btn-primary.active,
+.btn.btn-primary.show,
+.show > .btn.btn-primary  {
+    border-color: #C00000;
+    background-color: #C00000 !important;
+}
