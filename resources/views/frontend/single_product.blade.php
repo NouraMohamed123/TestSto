@@ -99,10 +99,10 @@
            <div class="heading d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">  </h5>
                    <button class='btn btn-outline-danger p-3 py-2'  type="button">
-                    <a href="{{ route('checkout') }}"> {{  trans('product.payment_page')  }}</a> </button>
+                    <a href="{{ route('checkout', ['id'=>$product->id]) }}"> {{  trans('product.payment_page')  }}</a> </button>
             </div>
               
-           
+              
         </div>
     </div>
 

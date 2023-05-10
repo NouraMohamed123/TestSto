@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::where('id', 5)->first();
+        $product = Product::where('id', 1)->first();
 
         return view('frontend.single_product', compact('product'));
     }

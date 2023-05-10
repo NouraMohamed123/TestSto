@@ -16,8 +16,8 @@ class CreateOrderAddressesTable extends Migration
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->string('type');
             $table->string('name');
+            $table->string('email');
             $table->string('address');
             $table->string('city');
             $table->string('state');

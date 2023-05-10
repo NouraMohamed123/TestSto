@@ -45,10 +45,16 @@ Route::group(
         Route::get('/checkout', [CheckoutController::class, 'index'])->name(
             'checkout'
         );
-        Route::get('/checkout/payment', [
-            CheckoutController::class,
-            'store',
-        ])->name('checkout.payment');
+        Route::post('/checkout', [CheckoutController::class, 'store'])->name(
+            'checkout.payment'
+        );
+        ////////////////////////////////////////paymentt
+        //stripe
+        Route::post(
+            'orders/{order}/stripe/payments',
+            'StripeService@create'
+        )->name('order.payment.create');
+
         /////////////////////////
         Route::get('/dashboard', function () {
             return view('dashboard');

@@ -2,15 +2,15 @@
 @push('css')
 
 @endpush
-
-  
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h2 class="mb-4">Checkout</h2>
-                <form action="{{ route('checkout.payment') }}" method="POST">
+                <form action="{{ route('checkout.payment') }}" method="POST"  novalidate>
                     @csrf
+                     @method('post')
+                      <input type="hidden" name="product_id" value="1">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" name="name" id="name" class="form-control" required>
@@ -62,7 +62,7 @@
                         </label>
                     </div>
                     <div id="stripe-form">
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="card_number">Card Number</label>
                             <input type="text" name="card_number" id="card_number" class="form-control" required>
                         </div>
@@ -75,14 +75,14 @@
                                 <label for="cvv">CVV</label>
                                 <input type="text" name="cvv" id="cvv" class="form-control" required>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div id="paypal-form" class="d-none">
                         <p>Redirecting to PayPal...</p>
                         <!-- Add PayPal button code here -->
                     </div>
                     <div id="paymob-form" class="d-none">
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="card_number">Card Number</label>
                             <input type="text" name="card_number" id="card_number" class="form-control" required>
                         </div>
@@ -95,7 +95,7 @@
                                 <label for="cvv">CVV</label>
                                 <input type="text" name="cvv" id="cvv" class="form-control" required>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <button type="submit" class="btn btn-primary mt-4">Submit Payment</button>
                 </form>

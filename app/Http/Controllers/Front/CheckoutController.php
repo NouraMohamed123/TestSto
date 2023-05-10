@@ -37,85 +37,96 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
-            'country' => 'required',
-            'payment_option' => 'required',
-        ]);
+        // print_r($request->all());
+        // exit();
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'address' => 'required',
+                'city' => 'required',
+                'state' => 'required',
+                'zip' => 'required',
+                'country' => 'required',
+                'payment_option' => 'required',
+            ]);
 
-        // Create a new order
-        $order = new Order();
-        $order->user_id = auth()->user()->id; // or any user id
-        $order->save();
+            // Create a new order
+            $order = new Order();
+            $order->payment_method = $request->payment_option;
+            $order->payment_method = $request->payment_option;
+            $order->product_id = $request->product_id;
+            $order->save();
 
-        // Create a new order address
-        $address = new OrderAddress();
-        $address->order_id = $order->id;
-        $address->name = $request->input('name');
-        $address->email = $request->input('email');
-        $address->address = $request->input('address');
-        $address->city = $request->input('city');
-        $address->state = $request->input('state');
-        $address->zip = $request->input('zip');
-        $address->country = $request->input('country');
-        $address->save();
+            $address = new OrderAddress();
+            $address->order_id = $order->id;
+            $address->name = $request->input('name');
+            $address->email = $request->input('email');
+            $address->address = $request->input('address');
+            $address->city = $request->input('city');
+            $address->state = $request->input('state');
+            $address->zip = $request->input('zip');
+            $address->country = $request->input('country');
+            $address->save();
 
-        // Get the selected payment option
-        $paymentOption = $request->input('payment_option');
-
-        // Handle the payment based on the selected option
-        switch ($paymentOption) {
-            case 'stripe':
-                // Process the Stripe payment
-                // ...
-
-                // Create a new payment
-                $payment = new Payment();
-                $payment->order_id = $order->id;
-                $payment->payment_method = 'Stripe';
-                $payment->status = 'paid'; // or any payment status
-                $payment->save();
-
-                break;
-            case 'paypal':
-                // Process the PayPal payment
-                // ...
-
-                // Create a new payment
-                $payment = new Payment();
-                $payment->order_id = $order->id;
-                $payment->payment_method = 'PayPal';
-                $payment->status = 'paid'; // or any payment status
-                $payment->save();
-
-                break;
-            case 'paymob':
-                // Process the Paymob payment
-                // ...
-
-                // Create a new payment
-                $payment = new Payment();
-                $payment->order_id = $order->id;
-                $payment->payment_method = 'Paymob';
-                $payment->status = 'paid'; // or any payment status
-                $payment->save();
-
-                break;
-            default:
-                return redirect()
-                    ->back()
-                    ->withErrors(['Invalid payment option selected.']);
+            $order::update([($order->amount = $order->product->price_new)]);
+        } catch (\Throwable $th) {
+            print_r($th->getMessage());
+            exit();
+            //throw $th;
         }
 
-        // Return a success message
-        return redirect()
-            ->route('thankyou')
-            ->with('success', 'Payment successful!');
+        // // Get the selected payment option
+        // $paymentOption = $request->input('payment_option');
+
+        // // Handle the payment based on the selected option
+        // switch ($paymentOption) {
+        //     case 'stripe':
+        //         // Process the Stripe payment
+        //         // ...
+
+        //         // Create a new payment
+        //         $payment = new Payment();
+        //         $payment->order_id = $order->id;
+        //         $payment->payment_method = 'Stripe';
+        //         $payment->status = 'paid'; // or any payment status
+        //         $payment->save();
+
+        //         break;
+        //     case 'paypal':
+        //         // Process the PayPal payment
+        //         // ...
+
+        //         // Create a new payment
+        //         $payment = new Payment();
+        //         $payment->order_id = $order->id;
+        //         $payment->payment_method = 'PayPal';
+        //         $payment->status = 'paid'; // or any payment status
+        //         $payment->save();
+
+        //         break;
+        //     case 'paymob':
+        //         // Process the Paymob payment
+        //         // ...
+
+        //         // Create a new payment
+        //         $payment = new Payment();
+        //         $payment->order_id = $order->id;
+        //         $payment->payment_method = 'Paymob';
+        //         $payment->status = 'paid'; // or any payment status
+        //         $payment->save();
+
+        //         break;
+        //     default:
+        //         return redirect()
+        //             ->back()
+        //             ->withErrors(['Invalid payment option selected.']);
+        // }
+
+        // // Return a success message
+        // return redirect()
+        //     ->route('thankyou')
+        //     ->with('success', 'Payment successful!');
     }
 
     /**
